@@ -1,15 +1,14 @@
 package war.cards.activity;
 
-import war.cards.components.R;
-import war.cards.components.R.layout;
-import android.app.Activity;
+import com.badlogic.gdx.backends.android.AndroidApplication;
+import war.game.WarGame;
 import android.os.Bundle;
 
-public class WarActivity extends Activity {
+public class WarActivity extends AndroidApplication {
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main);
+        initialize(new WarGame(), false);
     }
 }

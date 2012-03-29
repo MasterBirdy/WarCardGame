@@ -57,6 +57,7 @@ public class Deck {
                 cards.add(new Card(rank, suit)); //create a new card with that rank and suit
             }
         }
+        
     }
     
     /**
@@ -72,6 +73,10 @@ public class Deck {
     	}
     }
     
+    public int getSize()
+    {
+    	return cards.size();
+    }
     /**
      * Gives you a half of the deck for the player to use
      */
@@ -81,7 +86,7 @@ public class Deck {
         if (end < start) 
             throw new IllegalArgumentException("end must be equal or greater than start");
     	ArrayList<Card> tempList = new ArrayList<Card>(end - start + 1);
-		for (int i = start; i < end; i++)
+		for (int i = start; i <= end; i++)
 		{
 			tempList.add(cards.get(i));
 		}
@@ -95,6 +100,16 @@ public class Deck {
     public void add(Card c)
     {
     	cards.add(c);
+    }
+    
+    
+    /**
+     * Removes a card of where your card index previously was.
+     */
+    
+    public Card remove()
+    {
+    	return cards.remove(--nextCardIndex);
     }
     
     /**
@@ -128,9 +143,9 @@ public class Deck {
      * @return  the card dealt
      */
     public Card deal() {
-        if (nextCardIndex + 1 > cards.size()) //used to say (nextCardIndex + 1 >= NO_OF_CARDS)
+        if (nextCardIndex >= cards.size()) //used to say (nextCardIndex + 1 >= NO_OF_CARDS)
         {
-            throw new IllegalStateException("No cards left in deck");
+            nextCardIndex = 0;
         }
         return cards.get(nextCardIndex++);
     }
@@ -162,50 +177,6 @@ public class Deck {
         }
         return dealtCards;
     }
-    
-    /**
-     * Deals a specific card.
-     * 
-     * @param rank
-     *            The card's rank.
-     * @param suit
-     *            The card's suit.
-     * 
-     * @return The card if available, otherwise null.
-     * 
-     * @throws IllegalStateException
-     *             If there are no cards left in the deck.
-     */
-    
- /*   //For Cheating? I'm not sure why we need this
-    public Card deal(int rank, int suit) {
-        if (nextCardIndex + 1 > NO_OF_CARDS) //used to say (nextCardIndex + 1 >= NO_OF_CARDS)
-        {
-            throw new IllegalStateException("No cards left in deck");
-        }
-        Card card = null;
-        int index = -1;
-        for (int i = nextCardIndex; i < NO_OF_CARDS; i++) {
-            if ((cards[i].getRank() == rank) && (cards[i].getSuit() == suit)) {
-                index = i;
-                break;
-            }
-        }
-        if (index != -1) {
-            if (index != nextCardIndex) {
-                Card nextCard = cards[nextCardIndex];
-                cards[nextCardIndex] = cards[index];
-                cards[index] = nextCard;
-            }
-            card = deal();
-        }
-        return card;
-    }*/
-    
-    /*
-     * (non-Javadoc)
-     * @see java.lang.Object#toString()
-     */
     
     @Override
     public String toString() {

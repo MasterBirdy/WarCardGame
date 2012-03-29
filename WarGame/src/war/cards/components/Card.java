@@ -178,8 +178,9 @@ public class Card implements Comparable<Card>, Serializable{
 	 * Returns the rank in String form.
 	 * 
 	 * @return The rank.
+	 * @throws Exception 
 	 */
-	public String getRankString() {
+	public String getRankString() throws Exception {
 		return toStringRankHelper(rank);
 	}
 	
@@ -187,8 +188,9 @@ public class Card implements Comparable<Card>, Serializable{
 	 * Returns the suit in String form.
 	 * 
 	 * @return The suit.
+	 * @throws Exception 
 	 */
-	public String getSuitString() {
+	public String getSuitString() throws Exception {
 		return toStringSuitHelper(suit);
 	}
 
@@ -228,8 +230,8 @@ public class Card implements Comparable<Card>, Serializable{
 	 * @see java.lang.Comparable#compareTo(java.lang.Object)
 	 */
 	public int compareTo(Card card) {
-		int thisValue = hashCode();
-		int otherValue = card.hashCode();
+		int thisValue = getRank();
+		int otherValue = card.getRank();
 		if (thisValue < otherValue) {
 			return -1;
 		} else if (thisValue > otherValue) {
@@ -240,52 +242,52 @@ public class Card implements Comparable<Card>, Serializable{
 	}
 
 	//Helps format the toString to make it more meaningful
-	private String toStringSuitHelper(int suit)
+	private String toStringSuitHelper(int suit) throws Exception
 	{ 
 		if (suit == Card.SPADES)
-		return "Spades";
+		return "s";
 		if (suit == Card.CLUBS)
-			return "Clubs";
+			return "c";
 		if (suit == Card.HEARTS)
-			return "Hearts";
+			return "h";
 		if (suit == Card.DIAMONDS)
-			return "Diamonds";
+			return "d";
 		else
-			return "Invalid suit";
+			throw new Exception("Error");
 		
 	}
 	
 	//Helps format the toString to make it more meaningful
-	private String toStringRankHelper(int rank)
+	private String toStringRankHelper(int rank) throws Exception
 	{ 
 		if (rank == Card.ACE)
-			return "Ace";
+			return "1";
 		if (rank == Card.KING)
-			return "King";
+			return "k";
 		if (rank == Card.QUEEN)
-			return "Queen";
+			return "q";
 		if (rank == Card.JACK)
-			return "Jack";
+			return "j";
 		if (rank == Card.TEN)
-			return "Ten";
+			return "10";
 		if (rank == Card.NINE)
-			return "Nine";
+			return "9";
 		if (rank == Card.EIGHT)
-			return "Eight";
+			return "8";
 		if (rank == Card.SEVEN)
-			return "Seven";
+			return "7";
 		if (rank == Card.SIX)
-			return "Six";
+			return "6";
 		if (rank == Card.FIVE)
-			return "Five";
+			return "5";
 		if (rank == Card.FOUR)
-			return "Four";
+			return "4";
 		if (rank == Card.THREE)
-			return "Three";
+			return "3";
 		if (rank == Card.DEUCE)
-			return "Two";
+			return "2";
 		else
-			return "Invalid Rank";
+			throw new Exception("error");
 	}
 		
 	/*
@@ -294,7 +296,13 @@ public class Card implements Comparable<Card>, Serializable{
 	 */
 	@Override
 	public String toString() {
-		return toStringRankHelper(rank) + " of " + toStringSuitHelper(suit);
+		try {
+			return toStringSuitHelper(suit) + toStringRankHelper(rank);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return "";
 	}
 
 }

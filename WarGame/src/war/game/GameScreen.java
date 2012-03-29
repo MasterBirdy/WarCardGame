@@ -70,12 +70,12 @@ public class GameScreen implements Screen {
 		batch.setProjectionMatrix(guiCam.combined);
 		batch.begin();
 		batch.draw(card1, 10, 10, 0, 0, 142, 192);
-		batch.draw(cardBorder, 8, 8, 0, 0, 144, 194);
+		batch.draw(cardBorder, 8, 8, 0, 0, 146, 196);
 		font.draw(batch, chars, 100, Gdx.graphics.getHeight()/2 + 50);
 		font.draw(batch, charsDeck1, Gdx.graphics.getWidth() - 100, 100);
 		font.draw(batch, charsDeck2, 10, Gdx.graphics.getHeight() - 10);
 		batch.draw(card2, Gdx.graphics.getWidth()-142-10, Gdx.graphics.getHeight()-192-10, 0, 0, 142, 192);
-		batch.draw(cardBorder, Gdx.graphics.getWidth()-144-10, Gdx.graphics.getHeight()-194-10, 0, 0, 144, 194);
+		batch.draw(cardBorder, Gdx.graphics.getWidth()-144-10, Gdx.graphics.getHeight()-194-10, 0, 0, 146, 196);
         batch.end();
 	}
 

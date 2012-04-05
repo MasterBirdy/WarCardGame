@@ -24,6 +24,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.utils.Logger;
+
 /**
  * A Deck represents a standard 52-card deck ofcards (without jokers).
  * 
@@ -102,6 +105,11 @@ public class Deck {
     	cards.add(c);
     }
     
+    public void add(List<Card> cl)
+    {
+    	for (Card c : cl)
+    		cards.add(c);
+    }
     
     /**
      * Removes a card of where your card index previously was.
@@ -109,6 +117,8 @@ public class Deck {
     
     public Card remove()
     {
+    	if (nextCardIndex - 1 < 0)
+    		nextCardIndex = cards.size() - 1;
     	return cards.remove(--nextCardIndex);
     }
     
@@ -184,6 +194,14 @@ public class Deck {
         for (Card card : cards)
             s += card + "\n";
         return s;
+    }
+    
+    public Card getCard(int index)
+    {
+    	if (index + 1 > cards.size())
+    		throw new ArrayIndexOutOfBoundsException();
+    	else 
+    		return cards.get(index);
     }
     
 }

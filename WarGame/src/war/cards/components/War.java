@@ -2,6 +2,8 @@ package war.cards.components;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class War {
@@ -10,7 +12,10 @@ public class War {
 	private Deck player2Deck;
 	private Card player1CurrentCard;
 	private Card player2CurrentCard;
-	
+	private List<Card> savedCards;
+	private boolean warMode = false;
+	private int warTimes = 0;
+
 
 	public War() 
 	{
@@ -20,7 +25,7 @@ public class War {
 		player2Deck = new Deck(deck.split(26, 51));
 		round();
 	}
-	
+
 	public void round()
 	{
 		player1CurrentCard = player1Deck.deal();
@@ -29,13 +34,30 @@ public class War {
 		if (winner == 1)
 		{
 			player1Deck.add(player2Deck.remove());
+			if (warMode)
+			{
+				for (int i = 0; i < warTimes * 3 ; i++)
+					player1Deck.add(player2Deck.remove());
+				warMode = false;
+			}
 		}
 		else if (winner == -1)
 		{
 			player2Deck.add(player1Deck.remove());
+			if (warMode)
+			{
+				for (int i = 0; i < warTimes * 3 ; i++)
+					player2Deck.add(player1Deck.remove());
+				warMode = false;
+			}
+		}
+		else if (winner == 0)
+		{
+			warMode = true;
+			warTimes++;
 		}
 	}
-	
+
 	public Card getPlayer1CurrentCard()
 	{
 		return player1CurrentCard;
@@ -45,17 +67,45 @@ public class War {
 	{
 		return player2CurrentCard;
 	}
-	
+
 	public int getPlayer1DeckSize()
 	{
 		return player1Deck.getSize();
 	}
-	
+
 	public int getPlayer2DeckSize()
 	{
 		return player2Deck.getSize();
 	}
 	
+	public List<Card> getOldCards()
+	{
+		ArrayList<Card> oldCards = new ArrayList<Card>();
+		if (whoWon() == 1)
+		{
+			for(int i = 0; i < warTimes * 3 + 1; i++ ) 
+			{
+				oldCards.add(player1Deck.getCard(player1Deck.getSize() - 1 - i));
+			}
+			if (!warMode)
+			{
+				warTimes = 0;
+			}
+		}
+		else if (whoWon() == -1)
+		{
+			for(int i = 0; i < warTimes * 3 + 1; i++ )
+			{
+				oldCards.add(player2Deck.getCard(player2Deck.getSize() - 1 - i));
+			}
+			if (!warMode)
+			{
+				warTimes = 0;
+			}
+		}
+		return oldCards;
+	}
+
 	public int whoWon()
 	{
 		return player1CurrentCard.compareTo(player2CurrentCard);

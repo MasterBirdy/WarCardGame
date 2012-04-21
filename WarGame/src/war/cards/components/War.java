@@ -14,16 +14,21 @@ public class War {
 	private Card player2CurrentCard;
 	private List<Card> savedCards;
 	private boolean warMode = false;
+	private boolean firstTime;
 	private int warTimes = 0;
+	ArrayList<Card> oldCards = new ArrayList<Card>();
 
 
 	public War() 
 	{
 		Deck deck = new Deck();
 		deck.shuffle();
-		player1Deck = new Deck(deck.split(0, 25));
-		player2Deck = new Deck(deck.split(26, 51));
-		round();
+		player1Deck = new Deck(deck.split(0, 0));
+		player2Deck = new Deck(deck.split(1, 51));
+		firstTime = true;
+		//player1Deck = new Deck(deck.split(0, 1));
+		//player2Deck = new Deck(deck.split(2, 51));
+		//round();
 	}
 
 	public void round()
@@ -56,6 +61,12 @@ public class War {
 			warMode = true;
 			warTimes++;
 		}
+		firstTime = false;
+	}
+	
+	public boolean isFirstTime()
+	{
+		return firstTime;
 	}
 
 	public Card getPlayer1CurrentCard()
@@ -80,7 +91,7 @@ public class War {
 	
 	public List<Card> getOldCards()
 	{
-		ArrayList<Card> oldCards = new ArrayList<Card>();
+		oldCards.clear();
 		if (whoWon() == 1)
 		{
 			for(int i = 0; i < warTimes * 3 + 1; i++ ) 
